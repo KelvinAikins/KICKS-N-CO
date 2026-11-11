@@ -1,7 +1,4 @@
 "use strict";
-// Replace with your WhatsApp number: country code first, digits only (e.g. 233241234567)
-const WHATSAPP = "233000000000";
-
 const CATS = {
   foot: ["Sneakers", "Slides", "Trainers", "Sportswear", "Others"],
   fit: ["Streetwear", "Casuals", "Official", "Comfies"]
@@ -13,27 +10,8 @@ const ACCENT = {
   Coral: ["#FF5C8A", "#1B1B2F"], Mint: ["#3DDC97", "#1B1B2F"]
 };
 
-// name, section, category, price (GHS), emoji
-const P = [
-  ["Court Classic", "foot", "Sneakers", 520, "👟"], ["Cloud Runner", "foot", "Sneakers", 680, "👟"],
-  ["Retro High", "foot", "Sneakers", 750, "👟"],
-  ["Pool Slide", "foot", "Slides", 120, "🩴"], ["Cushion Slide", "foot", "Slides", 150, "🩴"],
-  ["Strap Slide", "foot", "Slides", 180, "🩴"],
-  ["Gym Flex", "foot", "Trainers", 420, "👟"], ["Cross Trainer Pro", "foot", "Trainers", 560, "👟"],
-  ["Lift Low", "foot", "Trainers", 480, "👟"],
-  ["Pitch Football Boots", "foot", "Sportswear", 600, "⚽"], ["Hoops Mid Basketball", "foot", "Sportswear", 720, "🏀"],
-  ["Track Spike", "foot", "Sportswear", 540, "🏃"],
-  ["Chelsea Boot", "foot", "Others", 650, "🥾"], ["Leather Loafer", "foot", "Others", 590, "👞"],
-  ["Strap Sandal", "foot", "Others", 260, "🩴"], ["Work Boot", "foot", "Others", 700, "🥾"],
-  ["Oversized Graphic Tee", "fit", "Streetwear", 180, "👕"], ["Cargo Pants", "fit", "Streetwear", 320, "👖"],
-  ["Puffer Vest", "fit", "Streetwear", 450, "🧥"], ["Varsity Jacket", "fit", "Streetwear", 520, "🧥"],
-  ["Linen Shirt", "fit", "Casuals", 240, "👕"], ["Chino Shorts", "fit", "Casuals", 200, "🩳"],
-  ["Classic Polo", "fit", "Casuals", 190, "👕"], ["Denim Jacket", "fit", "Casuals", 380, "🧥"],
-  ["Slim Blazer", "fit", "Official", 650, "🧥"], ["Oxford Shirt", "fit", "Official", 280, "👔"],
-  ["Tailored Trousers", "fit", "Official", 360, "👖"], ["Silk Tie", "fit", "Official", 90, "👔"],
-  ["Pullover Hoodie", "fit", "Comfies", 350, "🧥"], ["Zip Hoodie", "fit", "Comfies", 380, "🧥"],
-  ["Jogger Set", "fit", "Comfies", 420, "👖"], ["Fleece Sweatshirt", "fit", "Comfies", 300, "🧥"]
-].map((a, i) => ({ id: i, n: a[0], g: a[1], c: a[2], p: a[3], e: a[4] }));
+const P = PRODUCTS.map((a, i) => ({ ...a, id: i }));
+const pic = p => p.img ? `<img src="img/${p.img}" alt="${p.n}" loading="lazy">` : `<span>${p.e || ""}</span>`;
 
 // Per-user state, saved in this browser
 let S = { name: "", accent: "Sun", cart: [], wish: [], seen: {} };
@@ -47,7 +25,7 @@ function card(p) {
   const on = S.wish.includes(p.id);
   return `<article class="card" style="--c:${TILE[p.id % 5]}">
     <button class="heart ${on ? "on" : ""}" data-w="${p.id}" aria-pressed="${on}" aria-label="Save ${p.n}">&hearts;</button>
-    <button class="pic" data-o="${p.id}" aria-label="View ${p.n}"><span>${p.e}</span></button>
+    <button class="pic" data-o="${p.id}" aria-label="View ${p.n}">${pic(p)}</button>
     <div class="info"><h3>${p.n}</h3><p>${p.c}</p><b>GHS ${p.p}</b></div></article>`;
 }
 
@@ -82,7 +60,7 @@ function renderCart() {
   $("#cartN").textContent = S.cart.reduce((a, c) => a + c.q, 0);
   $("#items").innerHTML = S.cart.length ? S.cart.map((c, i) => {
     const p = P[c.id];
-    return `<li><span class="mini" style="--c:${TILE[p.id % 5]}">${p.e}</span>
+    return `<li><span class="mini" style="--c:${TILE[p.id % 5]}">${pic(p)}</span>
       <div><b>${p.n}</b><small>Size ${c.s}, GHS ${p.p}</small></div>
       <div class="qty"><button data-qi="${i}" data-d="-1" aria-label="Fewer">-</button><span>${c.q}</span>
       <button data-qi="${i}" data-d="1" aria-label="More">+</button></div></li>`;
@@ -132,7 +110,7 @@ function wish(id) {
 
 function openP(id) {
   const p = P[id]; V.open = p; V.size = null; bump(p.c, 1); save(); renderFor();
-  $("#dBody").innerHTML = `<div class="dpic" style="--c:${TILE[p.id % 5]}"><span>${p.e}</span></div>
+  $("#dBody").innerHTML = `<div class="dpic" style="--c:${TILE[p.id % 5]}">${pic(p)}</div>
     <div class="dinfo"><h2>${p.n}</h2><p>${p.c}</p><b>GHS ${p.p}</b>
     <p class="lab">Size</p><div class="sizes">${SIZES[p.g].map(s => `<button data-s="${s}">${s}</button>`).join("")}</div>
     <p id="dMsg" role="status"></p><button class="cta" id="addBtn">Add to bag</button></div>`;

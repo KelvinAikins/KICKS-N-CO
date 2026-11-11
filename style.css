@@ -94,3 +94,6 @@ dialog::backdrop{background:rgba(27,27,47,.5)}
   .dpic{min-height:200px;font-size:96px;border-right:0;border-bottom:2px solid var(--ink)}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+.pic,.dpic,.mini{overflow:hidden}
+.pic img,.dpic img,.mini img{width:100%;height:100%;object-fit:cover;display:block}
