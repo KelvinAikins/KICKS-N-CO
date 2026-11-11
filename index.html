@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KICKS N CO | Footwear and fits</title>
+<meta name="description" content="Sneakers, slides, trainers and menswear fits, priced in GHS.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="#">KICKS<span>N</span>CO</a>
+  <input id="q" type="search" placeholder="Search shoes and fits" aria-label="Search shoes and fits">
+  <div class="swatches" id="swatches" role="group" aria-label="Pick your colour"></div>
+  <button class="ibtn" id="wishBtn" aria-label="Show saved items">&hearts; <b id="wishN">0</b></button>
+  <button class="ibtn" id="cartBtn">Bag <b id="cartN">0</b></button>
+</header>
+
+<section class="hero">
+  <div>
+    <h1 id="hello">Fresh pairs. Fresh fits.</h1>
+    <p id="sub"></p>
+    <form id="nameForm">
+      <input id="nameIn" maxlength="24" placeholder="Your name" aria-label="Your name">
+      <button>Save name</button>
+    </form>
+  </div>
+  <div class="drop">
+    <p>Next drop lands in</p>
+    <div id="count">...</div>
+    <small>New stock every Friday at 6pm.</small>
+  </div>
+</section>
+
+<nav class="tabs" aria-label="Shop sections">
+  <button data-t="foot">Footwear</button>
+  <button data-t="fit">Fits</button>
+</nav>
+<div class="chips" id="chips"></div>
+<div class="bar">
+  <label>Sort
+    <select id="sort">
+      <option value="">Featured</option>
+      <option value="lo">Price, low to high</option>
+      <option value="hi">Price, high to low</option>
+    </select>
+  </label>
+  <label>Up to GHS <output id="maxO">800</output>
+    <input id="max" type="range" min="50" max="800" step="10" value="800">
+  </label>
+  <span id="count2" role="status"></span>
+</div>
+<main class="grid" id="grid"></main>
+
+<section id="foryou" hidden>
+  <h2>Picked for you</h2>
+  <p class="note">Based on what you've opened and saved.</p>
+  <div class="grid" id="fyGrid"></div>
+</section>
+
+<section class="contact">
+  <h2>Need help with an order?</h2>
+  <p>Message us on WhatsApp with your size and we'll confirm stock and delivery.</p>
+  <a class="cta wide" id="wa" href="#" target="_blank" rel="noopener">Chat on WhatsApp</a>
+</section>
+
+<div id="veil"></div>
+<aside id="drawer" aria-label="Your bag">
+  <div class="dh"><h2>Your bag</h2><button class="ibtn" id="cartClose">Close</button></div>
+  <ul id="items"></ul>
+  <div class="tot"><span>Total</span><b id="total">GHS 0</b></div>
+  <button class="cta" id="checkout">Order on WhatsApp</button>
+</aside>
+
+<dialog id="dlg" aria-label="Product details">
+  <button class="ibtn" id="dClose">Close</button>
+  <div id="dBody"></div>
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>
